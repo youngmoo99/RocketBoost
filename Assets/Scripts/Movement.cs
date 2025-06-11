@@ -1,0 +1,56 @@
+using UnityEngine;
+using UnityEngine.InputSystem; // namespace 
+
+public class Movement : MonoBehaviour
+{
+   [SerializeField] InputAction thrust;
+   [SerializeField] InputAction rotation; 
+   [SerializeField] float thrustStrength = 100f;
+   [SerializeField] float rotationStrength = 100f;
+   Rigidbody rb;
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    //오브젝트 활성화 필요 onEnable 
+    void OnEnable()
+    {
+        thrust.Enable();
+        rotation.Enable();
+    }
+
+
+    void FixedUpdate()
+    {
+        ProcessThrust();
+        ProcessRotation();
+    }
+
+    private void ProcessThrust()
+    {
+        if (thrust.IsPressed())
+        {
+            rb.AddRelativeForce(Vector3.up * thrustStrength * Time.fixedDeltaTime); //상대적인 힘을 추가하는 메서드 (x,y,z축)
+        }
+    }
+
+    void ProcessRotation() 
+    {
+        float rotationInput = rotation.ReadValue<float>(); //누른 방향키가 양수인지 음수인지 확인
+        if(rotationInput < 0) //왼쪽 방향키
+        {   
+            ApplyRotation(rotationStrength);
+        }
+        else if(rotationInput > 0) //오른쪽 방향키
+        {
+            ApplyRotation(-rotationStrength);
+        }
+      
+    }
+
+    void ApplyRotation(float rotationThisFrame)
+    {
+        transform.Rotate(Vector3.forward * rotationThisFrame * Time.fixedDeltaTime);
+    }
+}
