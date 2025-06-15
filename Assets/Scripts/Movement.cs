@@ -8,9 +8,11 @@ public class Movement : MonoBehaviour
    [SerializeField] float thrustStrength = 100f;
    [SerializeField] float rotationStrength = 100f;
    Rigidbody rb;
+   AudioSource audioSource;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     //오브젝트 활성화 필요 onEnable 
@@ -29,9 +31,17 @@ public class Movement : MonoBehaviour
 
     private void ProcessThrust()
     {
-        if (thrust.IsPressed())
+        if (thrust.IsPressed()) //방향키를 눌렀을때
         {
             rb.AddRelativeForce(Vector3.up * thrustStrength * Time.fixedDeltaTime); //상대적인 힘을 추가하는 메서드 (x,y,z축)
+            if (!audioSource.isPlaying) // 오디오 한번만 재생
+            {
+                audioSource.Play();
+            }   
+        }
+        else 
+        {
+            audioSource.Stop();
         }
     }
 
