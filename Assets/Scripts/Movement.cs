@@ -3,12 +3,17 @@ using UnityEngine.InputSystem; // namespace
 
 public class Movement : MonoBehaviour
 {
-   [SerializeField] InputAction thrust;
-   [SerializeField] InputAction rotation; 
-   [SerializeField] float thrustStrength = 100f;
-   [SerializeField] float rotationStrength = 100f;
-   Rigidbody rb;
-   AudioSource audioSource;
+    [SerializeField] InputAction thrust;
+    [SerializeField] InputAction rotation; 
+    [SerializeField] float thrustStrength = 100f;
+    [SerializeField] float rotationStrength = 100f;
+    [SerializeField] AudioClip mainEngineSFX;
+    [SerializeField] ParticleSystem mainEngineParticles;
+    [SerializeField] ParticleSystem rightEngineParticles;
+    [SerializeField] ParticleSystem leftEngineParticles;
+
+    Rigidbody rb;
+    AudioSource audioSource;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -36,12 +41,17 @@ public class Movement : MonoBehaviour
             rb.AddRelativeForce(Vector3.up * thrustStrength * Time.fixedDeltaTime); //상대적인 힘을 추가하는 메서드 (x,y,z축)
             if (!audioSource.isPlaying) // 오디오 한번만 재생
             {
-                audioSource.Play();
+                audioSource.PlayOneShot(mainEngineSFX);
             }   
+            if (!mainEngineParticles.isPlaying)
+            {
+                mainEngineParticles.Play();
+            }
         }
         else 
         {
             audioSource.Stop();
+            mainEngineParticles.Stop();
         }
     }
 
@@ -51,10 +61,25 @@ public class Movement : MonoBehaviour
         if(rotationInput < 0) //왼쪽 방향키
         {   
             ApplyRotation(rotationStrength);
+            if (!rightEngineParticles.isPlaying) // 왼쪽으로 꺾엇을때 오른쪽 엔진 파티클 활성화
+            {   
+                leftEngineParticles.Stop();
+                rightEngineParticles.Play(); 
+            }
         }
         else if(rotationInput > 0) //오른쪽 방향키
         {
             ApplyRotation(-rotationStrength);
+            if (!leftEngineParticles.isPlaying) // 오른쪽으로 꺾었을때 왼쪽 엔진 파티클 활성화
+            {   
+                rightEngineParticles.Stop();
+                leftEngineParticles.Play();
+            }
+        }
+        else  //아무것도 하지않앗을때 왼쪽 오른쪽 엔진 파티클 비활성화
+        {
+            rightEngineParticles.Stop();
+            leftEngineParticles.Stop();
         }
       
     }

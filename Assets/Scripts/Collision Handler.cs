@@ -6,8 +6,23 @@ using UnityEngine.SceneManagement;
 public class CollisionHandler : MonoBehaviour
 {   
     [SerializeField] float levelLoadDelay = 2f;
+    [SerializeField] AudioClip crashSFX;
+    [SerializeField] AudioClip successSFX;
+    [SerializeField] ParticleSystem successParticles;
+    [SerializeField] ParticleSystem crashParticles;
+    AudioSource audioSource;
+
+    bool isControllable = true;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     void OnCollisionEnter(Collision other)
     {   
+        if(!isControllable) { return; }  
+
         string tags = other.gameObject.tag;
         switch (tags)
         {
@@ -24,10 +39,15 @@ public class CollisionHandler : MonoBehaviour
                 StartCrashSequence();
                 break;
         }
+        
     }
 
     void StartCrashSequence()
     {   
+        isControllable = false; //다른 충돌 사운드 멈추기
+        audioSource.Stop();
+        audioSource.PlayOneShot(crashSFX); //폭발 사운드
+        crashParticles.Play(); //충돌 파티클 
         GetComponent<Movement>().enabled = false; // 움직임 멈춤
         Invoke("ReloadLevel",levelLoadDelay); //2초 후에 ReloadLevel 메소드 호출
     }
@@ -39,7 +59,11 @@ public class CollisionHandler : MonoBehaviour
     }
 
     void StartSuccessSequence()
-    {
+    {   
+        isControllable = false; //다른 충돌 사운드 멈추기
+        audioSource.Stop();
+        audioSource.PlayOneShot(successSFX); //성공 사운드
+        successParticles.Play(); //성공 파티클
         GetComponent<Movement>().enabled = false; //움직임 멈춤
         Invoke("ReloadNextLevel",levelLoadDelay); //2초후에 ReloadNextLevel 메소드 호출
     }
