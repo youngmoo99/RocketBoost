@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+
 
 public class CollisionHandler : MonoBehaviour
 {   
+
     [SerializeField] float levelLoadDelay = 2f;
     [SerializeField] AudioClip crashSFX;
     [SerializeField] AudioClip successSFX;
@@ -13,15 +16,32 @@ public class CollisionHandler : MonoBehaviour
     AudioSource audioSource;
 
     bool isControllable = true;
+    bool isCollidable = true; // 충돌 가능 여부
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
     }
+    
+    void Update()
+    {
+        RespondToDebugKeys();
+    }
+    void RespondToDebugKeys()
+    {
+        if (Keyboard.current.lKey.wasPressedThisFrame) //키보드 L키를 누르면
+        {
+            ReloadNextLevel();
+        }
+        else if (Keyboard.current.cKey.wasPressedThisFrame)
+        {
+            isCollidable = !isCollidable; // c키를 누를 때 마다 충돌을 끄고 켜기 가능
+        }
+    }
 
     void OnCollisionEnter(Collision other)
     {   
-        if(!isControllable) { return; }  
+        if(!isControllable || !isCollidable) { return; }  
 
         string tags = other.gameObject.tag;
         switch (tags)

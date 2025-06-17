@@ -27,7 +27,6 @@ public class Movement : MonoBehaviour
         rotation.Enable();
     }
 
-
     void FixedUpdate()
     {
         ProcessThrust();
@@ -36,53 +35,74 @@ public class Movement : MonoBehaviour
 
     private void ProcessThrust()
     {
-        if (thrust.IsPressed()) //방향키를 눌렀을때
+        if (thrust.IsPressed()) //스페이스바 눌렀을때
         {
-            rb.AddRelativeForce(Vector3.up * thrustStrength * Time.fixedDeltaTime); //상대적인 힘을 추가하는 메서드 (x,y,z축)
-            if (!audioSource.isPlaying) // 오디오 한번만 재생
-            {
-                audioSource.PlayOneShot(mainEngineSFX);
-            }   
-            if (!mainEngineParticles.isPlaying)
-            {
-                mainEngineParticles.Play();
-            }
+            StartThrusting();
         }
-        else 
+        else
         {
-            audioSource.Stop();
-            mainEngineParticles.Stop();
+            StopThrusting();
         }
+    }
+    void StartThrusting()
+    {
+        rb.AddRelativeForce(Vector3.up * thrustStrength * Time.fixedDeltaTime); //상대적인 힘을 추가하는 메서드 (x,y,z축)
+        if (!audioSource.isPlaying) // 오디오 한번만 재생
+        {
+            audioSource.PlayOneShot(mainEngineSFX);
+        }
+        if (!mainEngineParticles.isPlaying)
+        {
+            mainEngineParticles.Play();
+        }
+    }
+    void StopThrusting()
+    {
+        audioSource.Stop();
+        mainEngineParticles.Stop();
     }
 
     void ProcessRotation() 
     {
         float rotationInput = rotation.ReadValue<float>(); //누른 방향키가 양수인지 음수인지 확인
         if(rotationInput < 0) //왼쪽 방향키
-        {   
-            ApplyRotation(rotationStrength);
-            if (!rightEngineParticles.isPlaying) // 왼쪽으로 꺾엇을때 오른쪽 엔진 파티클 활성화
-            {   
-                leftEngineParticles.Stop();
-                rightEngineParticles.Play(); 
-            }
+        {
+            RotateRight();
         }
         else if(rotationInput > 0) //오른쪽 방향키
         {
-            ApplyRotation(-rotationStrength);
-            if (!leftEngineParticles.isPlaying) // 오른쪽으로 꺾었을때 왼쪽 엔진 파티클 활성화
-            {   
-                rightEngineParticles.Stop();
-                leftEngineParticles.Play();
-            }
+            RotateLeft();
         }
         else  //아무것도 하지않앗을때 왼쪽 오른쪽 엔진 파티클 비활성화
         {
-            rightEngineParticles.Stop();
-            leftEngineParticles.Stop();
+            StopRotate();
         }
-      
     }
+
+    void RotateRight()
+    {
+        ApplyRotation(rotationStrength);
+        if (!rightEngineParticles.isPlaying) // 왼쪽으로 꺾엇을때 오른쪽 엔진 파티클 활성화
+        {
+            leftEngineParticles.Stop();
+            rightEngineParticles.Play();
+        }
+    }
+    void RotateLeft()
+    {
+        ApplyRotation(-rotationStrength);
+        if (!leftEngineParticles.isPlaying) // 오른쪽으로 꺾었을때 왼쪽 엔진 파티클 활성화
+        {
+            rightEngineParticles.Stop();
+            leftEngineParticles.Play();
+        }
+    }
+    void StopRotate()
+    {
+        rightEngineParticles.Stop();
+        leftEngineParticles.Stop();
+    }
+
 
     void ApplyRotation(float rotationThisFrame)
     {
