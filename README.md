@@ -37,7 +37,9 @@ A physics-based 3D rocket control game — balance thrust, rotation, and timing 
 <h2 id="tech-stack">🧰 기술 스택 / Tech Stack</h2>
 
 **엔진**: Unity 6.0
+
 **언어**: C#
+
 **패키지/툴**: Input System, ParticleSystem, Rigidbody Physics, TextMeshPro, Git, VS Code
 
 **핵심 시스템 구성**
