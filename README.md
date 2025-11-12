@@ -121,15 +121,15 @@ Packages 자동 복구 후, Assets/Scenes/Demo.unity 실행
 
 <h2 id="roadmap">🚀 향후 계획 / Roadmap</h2>
 
- 난이도별 중력 세기 조정
+ * [ ] 난이도별 중력 세기 조정
 
- 연료 소모 시스템 (Time-Limit 방식)
+ * [ ] 연료 소모 시스템 (Time-Limit 방식)
 
- UI HUD (연료/속도/거리 표시)
+ * [ ] UI HUD (연료/속도/거리 표시)
 
- Checkpoint 시스템 추가
+ * [ ] Checkpoint 시스템 추가
 
- 모바일 터치 컨트롤 대응
+ * [ ] 모바일 터치 컨트롤 대응
 
 <h2 id="credits">👤 제작자 / Credits</h2>
 
