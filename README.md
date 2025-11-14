@@ -13,7 +13,7 @@ A physics-based 3D rocket control game — balance thrust, rotation, and timing 
 
 <h2 id="demo">🎮 플레이 영상</h2>
 
-▶️ Gameplay Video: 준비 중
+▶️ Gameplay Video: [플레이 영상](https://youtu.be/pnmQwe5bvPU)
 
 스페이스바로 로켓의 엔진을 점화하고, 좌우 회전으로 균형을 잡아 착륙 지점까지 도달합니다.
 충돌 시 폭발 이펙트와 사운드가 발생하며 2초 후 재시작됩니다.
