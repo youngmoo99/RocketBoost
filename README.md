@@ -115,7 +115,7 @@ Packages 자동 복구 후, Assets/Scenes/Demo.unity 실행
 
 ---
 
-<h2 id="screenshots">🖼️ 스크린샷 / Screenshots</h2> <p align="center"> <img src="77da7535-2fb8-4445-a8e6-0d81ef63985d.png" width="720" alt="Rocket Boost Gameplay"/> <img src="Rocket Boost Main.png" width="720" alt="Rocket Launch Scene"/> </p>
+<h2 id="screenshots">🖼️ 스크린샷 / Screenshots</h2> <p align="center"> <img src="RocketBoost GamePlay.png" width="720" alt="Rocket Boost Gameplay"/> </p>
 
 균형을 잡으며 왕복 플랫폼을 넘어 착륙하는 순간, 사운드와 파티클이 맞물려 짜릿한 피드백을 제공합니다.
 
