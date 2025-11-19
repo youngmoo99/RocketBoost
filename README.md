@@ -89,14 +89,10 @@ Assets/
 
 <h2 id="setup">⚙️ 설치 및 실행 / Setup</h2>
 
-저장소 클론
-
-git clone https://github.com/<YOUR_ID>/RoyalRun.git
-
-
-Unity Hub에서 프로젝트 열기
-
-Packages 자동 복구 후, Assets/Scenes/Demo.unity 실행
+1) Download ZIP
+2) 압축 풀기
+3) Build ZIP 파일 압축 풀기
+4) Build -> Windows -> exe파일 실행
 
 ▶️ Play
 
